@@ -24,11 +24,11 @@ public class RegisterUserUseCaseImpl implements RegisterUserPort {
         this.passwordHasher = passwordHasher;
     }
     @Override
-    public User register(String email, String rawPassword, Role role) {
+    public User register(String name, String email, String rawPassword, Role role) {
         if (userRepository.findByEmail(email).isPresent()) {
             throw new IllegalArgumentException("User already exists");
         }
-        User user = User.register(email, rawPassword, role, passwordHasher);
+        User user = User.register(name, email, rawPassword, role, passwordHasher);
         return userRepository.save(user);
 
     }

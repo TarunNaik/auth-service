@@ -24,7 +24,7 @@ public class UserAuthController {
     @PostMapping("/register")
     public ResponseEntity<UserRegisterResponse> registerUser(@RequestBody UserRegisterRequest request) {
 
-        User user = registerUserPort.register(request.email(), request.password(), new Role(request.role()));
+        User user = registerUserPort.register(request.name(), request.email(), request.password(), new Role(request.role()));
         return ResponseEntity.ok(new UserRegisterResponse(user.getId(), "User registered successfully"));
     }
 }

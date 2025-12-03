@@ -22,9 +22,10 @@ public class User {
     private HashedPassword password;
     private Role role;
 
-    public static User register(String email, String rawPassword, Role role, PasswordHasherPort passwordHasher) {
+    public static User register(String name, String email, String rawPassword, Role role, PasswordHasherPort passwordHasher) {
         HashedPassword hashedPassword = passwordHasher.hash(rawPassword);
         return User.builder().id(UUID.randomUUID().toString())
+                .name(name)
                 .email(new Email(email))
                 .password(hashedPassword)
                 .role(role)

@@ -32,4 +32,10 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
         UserEntity savedEntity = userRepository.save(userEntity);
         return userEntityMapper.toDomain(savedEntity);
     }
+
+    @Override
+    public boolean findByEmailAndPassword(String email, String password) {
+        return userRepository.findByEmailAndPassword(email, password )
+
+    }
 }

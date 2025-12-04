@@ -16,9 +16,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 // Allow API clients to call the registration endpoint without CSRF token
-                .csrf(csrf -> csrf.ignoringRequestMatchers(request -> "/api/v1/auth/register".equals(request.getRequestURI())))
+//                .csrf(csrf -> csrf.ignoringRequestMatchers(request -> "/api/v1/auth/register".equals(request.getRequestURI())))
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.OPTIONS).permitAll()
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )

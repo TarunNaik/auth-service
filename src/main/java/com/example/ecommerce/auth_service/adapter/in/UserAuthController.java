@@ -9,10 +9,7 @@ import com.example.ecommerce.auth_service.domain.port.in.AuthenticateUserPort;
 import com.example.ecommerce.auth_service.domain.port.in.RegisterUserPort;
 import com.example.ecommerce.auth_service.domain.vo.Role;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -36,7 +33,17 @@ public class UserAuthController {
     @PostMapping("/login")
     public ResponseEntity<UserLoginResponse> loginUser(@RequestBody UserLoginRequest request) {
         // Login logic to be implemented
-        String token = authenticateUserPort.authenticate(request.email(), request.password());
-        return ResponseEntity.ok(new UserLoginResponse(token));
+        return ResponseEntity.ok(authenticateUserPort.authenticate(request));
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<String> getProfile(@RequestHeader("Authorization") String token) {
+        // Profile retrieval logic to be implemented
+        return ResponseEntity.ok("User profile data");
+    }
+    @PutMapping("/profile/update")
+    public ResponseEntity<String> updateProfile(@RequestBody String profileData) {
+        // Profile update logic to be implemented
+        return ResponseEntity.ok("User profile updated");
     }
 }

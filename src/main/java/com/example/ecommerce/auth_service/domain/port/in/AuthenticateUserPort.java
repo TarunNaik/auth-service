@@ -1,5 +1,8 @@
 package com.example.ecommerce.auth_service.domain.port.in;
 
+import com.example.ecommerce.auth_service.adapter.in.dto.UserLoginRequest;
+import com.example.ecommerce.auth_service.adapter.in.dto.UserLoginResponse;
+
 public interface AuthenticateUserPort {
-    String authenticate(String email, String rawPassword);
+    UserLoginResponse authenticate(UserLoginRequest request);
 }

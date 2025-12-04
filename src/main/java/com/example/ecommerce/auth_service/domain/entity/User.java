@@ -31,9 +31,4 @@ public class User {
                 .role(role)
                 .build();
     }
-
-    public boolean authenticate(String rawPassword, PasswordHasherPort passwordHasher) {
-        HashedPassword hashedPassword = passwordHasher.hash(rawPassword);
-        return passwordHasher.verify(rawPassword, this.password);
-    }
 }

@@ -33,7 +33,8 @@ public class SpringJwtTokenGenerator implements TokenGenerationPort {
                 .issuedAt(now)
                 .expiresAt(now.plus(expirationMinute, ChronoUnit.MINUTES))
                 .claim("role", user.getRole().getName()) // Assume User has getRoles()
-                .claim("email", user.getEmail().getValue())   // Custom claims
+                .claim("email", user.getEmail().getValue())
+                .claim("name", user.getName())// Custom claims
                 .build();
 
         JwtEncoderParameters params = JwtEncoderParameters.from(

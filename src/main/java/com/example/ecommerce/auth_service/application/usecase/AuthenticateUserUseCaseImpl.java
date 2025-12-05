@@ -38,6 +38,6 @@ public class AuthenticateUserUseCaseImpl implements AuthenticateUserPort {
             throw new RuntimeException("Invalid credentials");
         }
         String token = tokenGenerationPort.generateToken(user);
-        return new UserLoginResponse(token);
+        return new UserLoginResponse(token, user.getName(), user.getRole().getName());
     }
 }

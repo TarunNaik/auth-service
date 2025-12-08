@@ -5,4 +5,5 @@ import com.example.ecommerce.auth_service.adapter.in.dto.UserLoginResponse;
 
 public interface AuthenticateUserPort {
     UserLoginResponse authenticate(UserLoginRequest request);
+    boolean authorizeUser(String token, String requiredRole);
 }

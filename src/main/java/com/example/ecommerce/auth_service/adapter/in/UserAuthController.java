@@ -1,9 +1,6 @@
 package com.example.ecommerce.auth_service.adapter.in;
 
-import com.example.ecommerce.auth_service.adapter.in.dto.UserLoginRequest;
-import com.example.ecommerce.auth_service.adapter.in.dto.UserLoginResponse;
-import com.example.ecommerce.auth_service.adapter.in.dto.UserRegisterRequest;
-import com.example.ecommerce.auth_service.adapter.in.dto.UserRegisterResponse;
+import com.example.ecommerce.auth_service.adapter.in.dto.*;
 import com.example.ecommerce.auth_service.domain.entity.User;
 import com.example.ecommerce.auth_service.domain.port.in.AuthenticateUserPort;
 import com.example.ecommerce.auth_service.domain.port.in.RegisterUserPort;
@@ -45,5 +42,11 @@ public class UserAuthController {
     public ResponseEntity<String> updateProfile(@RequestBody String profileData) {
         // Profile update logic to be implemented
         return ResponseEntity.ok("User profile updated");
+    }
+
+    @PostMapping("/validate-token")
+    public ResponseEntity<Boolean> validateToken(@RequestBody UserAuthorizeRequest request) {
+        // Token validation logic to be implemented
+        return ResponseEntity.ok(authenticateUserPort.authorizeUser(request.token(), request.requiredRole()));
     }
 }

@@ -53,6 +53,16 @@ public class SpringJwtTokenGenerator implements TokenGenerationPort {
     }
 
     @Override
+    public Optional<String> getClaimFromToken(String token, String claimKey) {
+        try {
+            Jwt jwt = jwtDecoder.decode(token);
+            return Optional.of(jwt.getClaimAsString(claimKey));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
     public boolean validateToken(String token) {
         try {
             jwtDecoder.decode(token);

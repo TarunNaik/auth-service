@@ -7,5 +7,7 @@ import java.util.Optional;
 public interface TokenGenerationPort {
     String generateToken(User user);
     Optional<String> getSubjectFromToken(String token);
+    Optional<String> getClaimFromToken(String token, String claimKey);
     boolean validateToken(String token);
+
 }

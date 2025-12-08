@@ -10,6 +10,8 @@ import com.example.ecommerce.auth_service.domain.port.out.UserRepositoryPort;
 import com.example.ecommerce.auth_service.domain.vo.HashedPassword;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AuthenticateUserUseCaseImpl implements AuthenticateUserPort {
 
@@ -39,5 +41,23 @@ public class AuthenticateUserUseCaseImpl implements AuthenticateUserPort {
         }
         String token = tokenGenerationPort.generateToken(user);
         return new UserLoginResponse(token, user.getName(), user.getRole().getName());
+    }
+
+    @Override
+    public boolean authorizeUser(String jwtToken, String requiredRole) {
+        if(jwtToken == null || !jwtToken.startsWith("Bearer ")) {
+//            throw new SecurityException("Missing or invalid Authorization header.");
+            return false;
+        }
+
+        String token = jwtToken.replace("Bearer ", "");
+       if(!tokenGenerationPort.validateToken(token)) {
+           return false;
+       }
+       Optional<String> userId = tokenGenerationPort.getSubjectFromToken(token);
+       Optional<String> userRole = tokenGenerationPort.getClaimFromToken(token, "role");
+       User user = userRepositoryPort.findById(userId.orElseThrow()).orElseThrow();
+       return userRole.isPresent() && userRole.get().equalsIgnoreCase(requiredRole);
+
     }
 }

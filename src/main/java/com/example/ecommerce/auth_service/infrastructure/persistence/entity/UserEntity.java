@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "users")
 public class UserEntity {
     @Id
-    private String id;
+    private UUID id;
 
     @Column(nullable = false)
     private String name;

@@ -3,6 +3,7 @@ package com.example.ecommerce.auth_service.domain.port.out;
 import com.example.ecommerce.auth_service.domain.entity.User;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public interface TokenGenerationPort {
     String generateToken(User user);

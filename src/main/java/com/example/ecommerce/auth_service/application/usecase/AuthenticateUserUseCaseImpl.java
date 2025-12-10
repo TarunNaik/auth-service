@@ -11,6 +11,7 @@ import com.example.ecommerce.auth_service.domain.vo.HashedPassword;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AuthenticateUserUseCaseImpl implements AuthenticateUserPort {
@@ -60,4 +61,29 @@ public class AuthenticateUserUseCaseImpl implements AuthenticateUserPort {
        return userRole.isPresent() && userRole.get().equalsIgnoreCase(requiredRole);
 
     }
+
+    @Override
+    public Optional<UUID> getUserIdFromToken(String token, String requiredRole) {
+        if(token == null || !token.startsWith("Bearer ")) {
+            return Optional.empty();
+        }
+
+        String jwtToken = token.replace("Bearer ", "");
+        if(!tokenGenerationPort.validateToken(jwtToken)) {
+            return Optional.empty();
+        }
+        Optional<String> userId = tokenGenerationPort.getSubjectFromToken(jwtToken);
+        Optional<String> userRole = tokenGenerationPort.getClaimFromToken(jwtToken, "role");
+        Optional<String> userEmail = tokenGenerationPort.getClaimFromToken(jwtToken, "email");
+        if(userId.isEmpty() || userRole.isEmpty() || userEmail.isEmpty()) {
+            return Optional.empty();
+        }
+        User user = userRepositoryPort.findByEmail(userEmail.get()).orElseThrow();
+        if(userRole.get().equalsIgnoreCase(requiredRole)) {
+            return Optional.of(user.getId());
+        } else {
+            return Optional.empty();
+        }
+    }
+
 }

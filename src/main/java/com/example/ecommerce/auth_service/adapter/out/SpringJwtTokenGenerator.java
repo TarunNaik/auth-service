@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class SpringJwtTokenGenerator implements TokenGenerationPort {
@@ -29,7 +30,7 @@ public class SpringJwtTokenGenerator implements TokenGenerationPort {
     public String generateToken(User user) {
         Instant now = Instant.now();
         JwtClaimsSet claims = JwtClaimsSet.builder()
-                .subject(user.getId())
+                .subject(user.getId().toString())
                 .issuedAt(now)
                 .expiresAt(now.plus(expirationMinute, ChronoUnit.MINUTES))
                 .claim("role", user.getRole().getName()) // Assume User has getRoles()

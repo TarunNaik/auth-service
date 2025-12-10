@@ -8,6 +8,9 @@ import com.example.ecommerce.auth_service.domain.vo.Role;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/v1/auth")
 public class UserAuthController {
@@ -48,5 +51,13 @@ public class UserAuthController {
     public ResponseEntity<Boolean> validateToken(@RequestBody UserAuthorizeRequest request) {
         // Token validation logic to be implemented
         return ResponseEntity.ok(authenticateUserPort.authorizeUser(request.token(), request.requiredRole()));
+    }
+
+    @GetMapping("/get-user-id")
+    public ResponseEntity<Optional<UUID>> getUserIdFromToken(
+            @RequestHeader("Authorization") String token,
+            @RequestParam("role") String role) {
+        // Get user ID from token logic to be implemented
+        return ResponseEntity.ok(authenticateUserPort.getUserIdFromToken(token, role));
     }
 }

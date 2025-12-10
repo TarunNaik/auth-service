@@ -16,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
-    private String id;
+    private UUID id;
     private String name;
     private Email email;
     private HashedPassword password;
@@ -24,7 +24,7 @@ public class User {
 
     public static User register(String name, String email, String rawPassword, Role role, PasswordHasherPort passwordHasher) {
         HashedPassword hashedPassword = passwordHasher.hash(rawPassword);
-        return User.builder().id(UUID.randomUUID().toString())
+        return User.builder().id(UUID.randomUUID())
                 .name(name)
                 .email(new Email(email))
                 .password(hashedPassword)

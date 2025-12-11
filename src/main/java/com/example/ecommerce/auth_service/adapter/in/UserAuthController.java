@@ -47,10 +47,11 @@ public class UserAuthController {
         return ResponseEntity.ok("User profile updated");
     }
 
-    @PostMapping("/validate-token")
-    public ResponseEntity<Boolean> validateToken(@RequestBody UserAuthorizeRequest request) {
+    @GetMapping("/validate-token")
+    public ResponseEntity<Boolean> validateToken(@RequestHeader("Authorization") String token,
+                                                 @RequestParam("role") String role) {
         // Token validation logic to be implemented
-        return ResponseEntity.ok(authenticateUserPort.authorizeUser(request.token(), request.requiredRole()));
+        return ResponseEntity.ok(authenticateUserPort.authorizeUser(token, role));
     }
 
     @GetMapping("/get-user-id")

@@ -57,8 +57,12 @@ public class AuthenticateUserUseCaseImpl implements AuthenticateUserPort {
        }
        Optional<String> userId = tokenGenerationPort.getSubjectFromToken(token);
        Optional<String> userRole = tokenGenerationPort.getClaimFromToken(token, "role");
-       User user = userRepositoryPort.findById(userId.orElseThrow()).orElseThrow();
-       return userRole.isPresent() && userRole.get().equalsIgnoreCase(requiredRole);
+       Optional<String > userEmail = tokenGenerationPort.getClaimFromToken(token, "email");
+       if(userId.isEmpty() || userRole.isEmpty() || userEmail.isEmpty()) {
+           return false;
+       }
+       User user = userRepositoryPort.findByEmail(userEmail.get()).orElseThrow();
+       return user.getRole().getName().equalsIgnoreCase(requiredRole);
 
     }
 
